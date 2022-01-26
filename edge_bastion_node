@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Install packages for kubernetes, calico, terraform and cloud build/configure tools
+
+apt-get update
+apt-get install -y aptitude
+aptitude update
+aptitude upgrade -y
+aptitude install -y vim sec git tcpdump gcc clang cargo golang curl gnupg2 wireguard-tools docker.io macchanger python3 python3-pip python3-venv
+lsmod | grep br_netfilter || modprobe br_netfilter
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+yes | curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+aptitude update -y
+aptitude install kubelet kubeadm kubectl -y
+swapoff -a
+sysctl -p
+
+curl -L https://github.com/projectcalico/calico/releases/download/v3.21.4/calicoctl-linux-amd64 -o calicoctl
+cp calicoctl /usr/local/sbin/
+chmod 700 /usr/local/sbin/calicoctl
+
+yes | curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+#echo  "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" > /etc/apt/sources.list.d/hashicorp.list
+echo  "deb [arch=amd64] https://apt.releases.hashicorp.com bullseye main" > /etc/apt/sources.list.d/hashicorp.list
+
+aptitude update -y
+aptitude install terraform
