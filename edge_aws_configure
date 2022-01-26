@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Install AWS binaries for edge/bastion/bot
+
+curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+unzip awscli-bundle.zip
+which python || ln -sf $(which python3) /usr/bin/python || exit 1
+
+./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+aws --version
