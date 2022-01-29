@@ -10,10 +10,12 @@ which python || ln -sf $(which python3) /usr/bin/python || exit 1
 
 aws --version
 
-which wget || exit 1
-wget "https://github.com/weaveworks/eksctl/releases/download/v0.82.0/eksctl_Linux_amd64.tar.gz"
-mv eksctl_Linux_amd64.tar.gz /root/
-cd /root
-tar xzvf eksctl_Linux_amd64.tar.gz
-mv /root/eksctl /usr/local/sbin/
-chmod 0700 /usr/local/sbin/eksctl
+# The aws cli tool seems to be able to do everything we need outside of kubectl, so
+# commenting this out by default.
+#which wget || exit 1
+#wget "https://github.com/weaveworks/eksctl/releases/download/v0.82.0/eksctl_Linux_amd64.tar.gz"
+#mv eksctl_Linux_amd64.tar.gz /root/
+#cd /root
+#tar xzvf eksctl_Linux_amd64.tar.gz
+#mv /root/eksctl /usr/local/sbin/
+#chmod 0700 /usr/local/sbin/eksctl
